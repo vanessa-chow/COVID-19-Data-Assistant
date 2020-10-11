@@ -1,6 +1,6 @@
 # COVID-19 Data Assistant
 
-## Overview:
+## **Overview**:
 The *COVID-19 Data Assistant* is here to help restaurants, stores, or any type of health organization keep track of
 important information about their customers or visitors from that day. Businesses or organizations who use the
 *COVID-19 Data Assistant* can store the individual's name, phone number, and the other places
@@ -17,3 +17,9 @@ data manager assistant would help reduce the transmission of COVID-19 by encoura
 even if they are asymptomatic. I was inspired to create the *COVID-19 Data Assistant* after visiting a restaurant where
 I was asked to leave my information for this very purpose, and I felt like it was simple yet excellent way to keep track
 of all of the business/organization's visitors.
+
+## **User Stories**:
+- As a user, I want to be able to add a visitor's information to the list
+- As a user, I want to be able to print a list of names of visitors on the list
+- As a user, I want to be able to delete a visitor and re-enter their information if I've made a mistake
+- As a user, I want to be able to select a name on the visitor list and view their information in detail
