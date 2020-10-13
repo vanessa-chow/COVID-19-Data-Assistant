@@ -20,6 +20,6 @@ of all of the business/organization's visitors.
 
 ## **User Stories**:
 - As a user, I want to be able to add a visitor's information to the list
-- As a user, I want to be able to print a list of names of visitors on the list
+- As a user, I want to be able to view a list of names of visitors from the list
 - As a user, I want to be able to delete a visitor and re-enter their information if I've made a mistake
 - As a user, I want to be able to select a name on the visitor list and view their information in detail
