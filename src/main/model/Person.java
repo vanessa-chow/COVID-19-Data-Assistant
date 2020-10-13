@@ -6,7 +6,7 @@ public class Person {
     private String phoneNumber;                // the person's phone number
     private String placesVisited;              // places the person has been on a given day
 
-    // REQUIRES: person's first and last name, their phone number, and a list of places they've visited on a given day
+    // REQUIRES: person's first and last name, their phone number, and places they've visited on a given day
     // EFFECTS: creates a person with a name, phone number, and list of places they've visited
     public Person(String name, String phoneNumber,String placesVisited) {
         this.name = name;
