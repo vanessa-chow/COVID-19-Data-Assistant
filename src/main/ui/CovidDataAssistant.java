@@ -41,6 +41,7 @@ public class CovidDataAssistant {
     // MODIFIES: this
     // EFFECTS: processes user command
     private void processCommand(String command) {
+
         if (command.equals("a")) {
             newPerson();
         } else if (command.equals("n")) {
@@ -48,7 +49,14 @@ public class CovidDataAssistant {
         } else if (command.equals("r")) {
             removeLastPerson();
         } else if (command.equals("c")) {
-            checkDetails(database.getNames());
+            System.out.println("Please enter the name of the person whose details you would like to see.");
+            input.nextLine();
+            System.out.print("Enter the person's first and last name:");
+            String name = input.nextLine();
+            Person psn = database.seeDetails(name);
+            System.out.println("Name: " + psn.getName());
+            System.out.println("Phone number: " + psn.getPhoneNumber());
+            System.out.println("Places visited: " + psn.getPlacesVisited());
         } else {
             System.out.println("Selection not valid, please try again...");
         }
@@ -65,7 +73,7 @@ public class CovidDataAssistant {
     private void displayOptions() {
         System.out.println("\nPlease select from:");
         System.out.println("\na -> Add a new person");
-        System.out.println("\nn -> view names on today's list");
+        System.out.println("\nn -> View names on today's list");
         System.out.println("\nr -> Remove the last person (if you made a mistake entering their information)");
         System.out.println("\nc -> Check details on of a person whose name is on the list");
         System.out.println("\nd -> Done! Quit Covid Data Assistant");
@@ -90,19 +98,14 @@ public class CovidDataAssistant {
     // REQUIRES: list consists of at least one person
     // EFFECTS: view names on list
     private void viewNames() {
-        System.out.print(database.getNames());
+        System.out.print(database.outputNames());
         input.nextLine();
     }
 
+    // MODIFIES: this
     // EFFECTS: removes the last person from the list
     private void removeLastPerson() {
         database.removeLastPerson();
         System.out.print("Person has been removed.");
-    }
-
-    // EFFECTS: view details of person
-    private void checkDetails(String name) {
-        System.out.print("Please enter the name of the person whose details you would like to see.");
-        System.out.print(database.seeDetails(name));
     }
 }

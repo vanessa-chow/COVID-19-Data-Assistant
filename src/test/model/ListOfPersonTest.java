@@ -27,7 +27,7 @@ public class ListOfPersonTest {
     void testAddToList() {
         list1.addPerson(p1);
         assertEquals(1, list1.getSize());
-        assertEquals(p1, list1.getIndex(0));
+        assertEquals(p1, list1.getPerson(0));
     }
 
     @Test
@@ -35,15 +35,15 @@ public class ListOfPersonTest {
         list1.addPerson(p1);
         list1.addPerson(p2);
         assertEquals(2, list1.getSize());
-        assertEquals(p1, list1.getIndex(0));
-        assertEquals(p2, list1.getIndex(1));
+        assertEquals(p1, list1.getPerson(0));
+        assertEquals(p2, list1.getPerson(1));
     }
 
     @Test
     void testGetNames() {
         list1.addPerson(p1);
         list1.addPerson(p2);
-        assertEquals("Alicia Chow\nMegan Wong\n",list1.getNames());
+        assertEquals("Alicia Chow\nMegan Wong\n",list1.outputNames());
     }
 
     @Test
@@ -51,15 +51,15 @@ public class ListOfPersonTest {
         list1.addPerson(p1);
         list1.addPerson(p2);
         list1.removeLastPerson();
-        assertEquals("Alicia Chow\n", list1.getNames());
+        assertEquals("Alicia Chow\n", list1.outputNames());
         assertEquals(1, list1.getSize());
-        assertEquals(p1, list1.getIndex(0));
+        assertEquals(p1, list1.getPerson(0));
     }
 
     @Test
     void testSeeDetails() {
         list1.addPerson(p2);
-        assertEquals("Megan Wong\n", list1.getNames());
+        assertEquals("Megan Wong\n", list1.outputNames());
         assertEquals(p2, list1.seeDetails("Megan Wong"));
 
     }
