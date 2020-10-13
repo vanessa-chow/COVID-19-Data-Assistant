@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 
 public class ListOfPersonTest {
     public ListOfPerson list1;
@@ -56,5 +54,13 @@ public class ListOfPersonTest {
         assertEquals("Alicia Chow\n", list1.getNames());
         assertEquals(1, list1.getSize());
         assertEquals(p1, list1.getIndex(0));
+    }
+
+    @Test
+    void testSeeDetails() {
+        list1.addPerson(p2);
+        assertEquals("Megan Wong\n", list1.getNames());
+        assertEquals(p2, list1.seeDetails("Megan Wong"));
+
     }
 }

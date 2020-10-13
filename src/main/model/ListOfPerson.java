@@ -10,6 +10,7 @@ public class ListOfPerson {
         list1 = new ArrayList<>();
     }
 
+    // REQUIRES:
     public void addPerson(Person person) {
         list1.add(person);
     }
@@ -32,5 +33,14 @@ public class ListOfPerson {
 
     public void removeLastPerson() {
         list1.remove(getSize() - 1);
+    }
+
+    public Person seeDetails(String name) {
+        for (Person person : list1) {
+            if (name == person.getName()) {
+                return person;
+            }
+        }
+        return null;
     }
 }
