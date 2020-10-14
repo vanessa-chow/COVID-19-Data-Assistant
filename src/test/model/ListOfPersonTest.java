@@ -61,6 +61,7 @@ public class ListOfPersonTest {
         list1.addPerson(p2);
         assertEquals("Megan Wong\n", list1.outputNames());
         assertEquals(p2, list1.seeDetails("Megan Wong"));
+        assertEquals(null, list1.seeDetails("Vanessa Chow"));
 
     }
 }
