@@ -55,23 +55,12 @@ public class JsonReader {
     }
 
     // MODIFIES: lop
-    // EFFECTS: parses persons from JSON object and adds them to ListOfPerson
-    private void addPersons(ListOfPerson lop, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("person");
-        for (Object json : jsonArray) {
-            JSONObject nextPerson = (JSONObject) json;
-            addPerson(lop, nextPerson);
-        }
-    }
-
-    // MODIFIES: lop
     // EFFECTS: parses person from JSON object and adds it to lop
     private void addPerson(ListOfPerson lop, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         String phoneNumber = jsonObject.getString("phoneNumber");
         String placesVisited = jsonObject.getString("placesVisited");
         Person person = new Person(name, phoneNumber, placesVisited);
-        // loop to add more than one person (write out as an array)
         lop.addPerson(person);
     }
 }
