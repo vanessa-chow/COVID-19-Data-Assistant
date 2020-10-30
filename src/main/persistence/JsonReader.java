@@ -47,7 +47,7 @@ public class JsonReader {
         JSONArray persons = jsonObject.getJSONArray("persons");
         ListOfPerson lop = new ListOfPerson(name);
 
-        for (int i = 0; i < persons.length(); i++ ) {
+        for (int i = 0; i < persons.length(); i++) {
             JSONObject personObject = persons.getJSONObject(i);
             addPerson(lop, personObject);
         }
