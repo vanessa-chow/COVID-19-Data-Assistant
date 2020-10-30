@@ -5,6 +5,7 @@ import model.ListOfPerson;
 import org.json.JSONObject;
 
 // Code modelled after https://github.com/stleary/JSON-java.git
+
 // Represents a writer that writes JSON representation of ListOfPerson to file
 public class JsonWriter {
     private static final int TAB = 4;

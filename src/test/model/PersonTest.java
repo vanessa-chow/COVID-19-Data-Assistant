@@ -29,4 +29,11 @@ public class PersonTest {
         assertEquals("ICBC, Burnaby City Hall", p2.getPlacesVisited());
     }
 
+    @Test
+    void testToString() {
+        assertEquals(p1.toString(), "name:Alicia Chow:\n" +
+                "phone number:604-786-1061\n" +
+                " places visited:Lougheed Mall, SFU");
+    }
+
 }
