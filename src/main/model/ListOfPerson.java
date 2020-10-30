@@ -1,34 +1,53 @@
 package model;
 
-import java.util.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
-public class ListOfPerson {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    public ArrayList<Person> list1;
+// Represents a list of person having a collection of persons
+public class ListOfPerson implements Writable {
+    private String name;
+    private ArrayList<Person> persons;
 
-    public ListOfPerson() {
-        list1 = new ArrayList<>();
+    // EFFECTS: constructs list of person with a name and empty list of persons
+    public ListOfPerson(String name) {
+        this.name = name;
+        persons = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     // MODIFIES: this
     // EFFECTS: adds a person to the list
     public void addPerson(Person person) {
-        list1.add(person);
+        persons.add(person);
     }
 
-    public int getSize() {
-        return list1.size();
+    // EFFECTS: returns an unmodifiable list of persons in this list of person
+    public List<Person> getPersons() {
+        return Collections.unmodifiableList(persons);
+    }
+
+    public int numPersons() {
+        return persons.size();
     }
 
     public Person getPerson(int index) {
-        return list1.get(index);
+        return persons.get(index);
     }
+
 
     // REQUIRES: at least one name on the list
     // EFFECTS: outputs names on the list
     public String outputNames() {
         String result = "";
-        for (Person name : list1) {
+        for (Person name : persons) {
             result += name.getName() + "\n";
         }
         return result;
@@ -38,16 +57,35 @@ public class ListOfPerson {
     // MODIFIES: this
     // EFFECTS: removes last person on the list
     public void removeLastPerson() {
-        list1.remove(getSize() - 1);
+        persons.remove(numPersons() - 1);
     }
 
     // EFFECTS: returns details of person on list, given a name
     public Person seeDetails(String name) {
-        for (Person person : list1) {
+        for (Person person : persons) {
             if (name.equals(person.getName())) {
                 return person;
             }
         }
         return null;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("persons", personsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray personsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Person p : persons) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
     }
 }

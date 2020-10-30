@@ -65,7 +65,7 @@ public class CovidDataAssistant {
     // MODIFIES: this
     // EFFECTS: initializes lists
     private void init() {
-        database = new ListOfPerson();
+        database = new ListOfPerson("list1");
         input = new Scanner(System.in);
     }
 

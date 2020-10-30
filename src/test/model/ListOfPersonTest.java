@@ -13,20 +13,20 @@ public class ListOfPersonTest {
 
     @BeforeEach
     void runBefore() {
-        list1 = new ListOfPerson();
+        list1 = new ListOfPerson("list1");
         p1 = new Person("Alicia Chow", "604-786-1061", "Lougheed Mall, SFU");
         p2 = new Person("Megan Wong", "604-716-0161", "ICBC, Burnaby City Hall");
     }
 
     @Test
     void testMakeList() {
-        assertEquals(0, list1.getSize());
+        assertEquals(0, list1.numPersons());
     }
 
     @Test
     void testAddToList() {
         list1.addPerson(p1);
-        assertEquals(1, list1.getSize());
+        assertEquals(1, list1.numPersons());
         assertEquals(p1, list1.getPerson(0));
     }
 
@@ -34,7 +34,7 @@ public class ListOfPersonTest {
     void testAddAnotherPerson() {
         list1.addPerson(p1);
         list1.addPerson(p2);
-        assertEquals(2, list1.getSize());
+        assertEquals(2, list1.numPersons());
         assertEquals(p1, list1.getPerson(0));
         assertEquals(p2, list1.getPerson(1));
     }
@@ -52,7 +52,7 @@ public class ListOfPersonTest {
         list1.addPerson(p2);
         list1.removeLastPerson();
         assertEquals("Alicia Chow\n", list1.outputNames());
-        assertEquals(1, list1.getSize());
+        assertEquals(1, list1.numPersons());
         assertEquals(p1, list1.getPerson(0));
     }
 

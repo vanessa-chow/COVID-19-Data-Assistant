@@ -23,3 +23,5 @@ of all of the business/organization's visitors.
 - As a user, I want to be able to view a list of names of visitors from the list
 - As a user, I want to be able to delete a visitor and re-enter their information if I've made a mistake
 - As a user, I want to be able to select a name on the visitor list and view their information in detail
+- As a user, I want to be able to save my list of visitors' information to file
+- As a user, I want to be able to load my list of visitors' information on file

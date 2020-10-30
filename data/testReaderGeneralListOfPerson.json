@@ -1,0 +1,8 @@
+{
+    "persons": [{
+        "phoneNumber": "12345",
+        "name": "person1",
+        "placesVisited": "place 1, place 2"
+    }],
+    "name": "My list of person"
+}
