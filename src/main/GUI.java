@@ -1,3 +1,8 @@
+import model.ListOfPerson;
+import model.Person;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,13 +19,18 @@ public class GUI extends JFrame implements ActionListener {
     private JButton viewNamesButton;
     private JButton deleteRecentButton;
 
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
+    private String destination;
+    private String source;
+
+    private Person p1;
+    private ListOfPerson database;
+
     Color c1 = new Color(176, 196, 222);
     Color c2 = new Color(100, 150, 190);
 
     public GUI() {
-
-        this.setResizable(true);
-
         frame = new JFrame();
 
         addPersonButton = new JButton("Add a person");
@@ -28,7 +38,7 @@ public class GUI extends JFrame implements ActionListener {
         addPersonButton.addActionListener(this);
 
         viewNamesButton = new JButton("View the list of names of visitors");
-        viewNamesButton.setActionCommand("viewList");
+        viewNamesButton.setActionCommand("viewNames");
         viewNamesButton.addActionListener(this);
 
         deleteRecentButton = new JButton("Delete the most recently added visitor");
@@ -41,7 +51,7 @@ public class GUI extends JFrame implements ActionListener {
         mainPanel.add(addPersonButton);
         mainPanel.add(viewNamesButton);
         mainPanel.add(deleteRecentButton);
-        mainPanel.setBackground(c1);
+        mainPanel.setBackground(c2);
 
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,12 +62,12 @@ public class GUI extends JFrame implements ActionListener {
 
     public void personPanel() {
         JPanel addPersonPanel = new JPanel(new GridLayout(0, 2));
-        addPersonPanel.setBackground(c2);
+        addPersonPanel.setBackground(c1);
 
         JFrame addPersonFrame = new JFrame();
         addPersonFrame.setSize(400, 400);
 
-        JLabel nameLabel = new JLabel("Name:");
+        JLabel nameLabel = new JLabel("Name (first and last):");
         nameLabel.setBounds(40, 20, 80, 25);
         addPersonPanel.add(nameLabel);
 
@@ -84,8 +94,46 @@ public class GUI extends JFrame implements ActionListener {
         doneButton(addPersonFrame, addPersonPanel);
     }
 
+    public void viewNamesPanel() {
+        ListOfPerson database = new ListOfPerson("database");
+        JFrame viewNamesFrame = new JFrame();
+        viewNamesFrame.setSize(400, 400);
+        viewNamesFrame.setResizable(false);
+
+        JPanel viewNamesPanel = new JPanel();
+        viewNamesPanel.setVisible(true);
+
+        JTextArea output = new JTextArea(20, 20);
+        output.setBackground(c1);
+
+        JScrollPane pane = new JScrollPane(output);
+        output.setText(database.outputNames());
+
+        pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        viewNamesFrame.add(pane);
+
+        viewNamesFrame.setVisible(true);
+    }
+
+    public void createPerson() {
+        ListOfPerson database = new ListOfPerson("database");
+
+        JTextField nameField = new JTextField(20);
+        String name = nameField.getText();
+
+        JTextField phoneField = new JTextField(20);
+        String number = phoneField.getText();
+
+        JTextField placesField = new JTextField(20);
+        String places = placesField.getText();
+
+        Person p1 = new Person(name, number, places);
+        database.addPerson(p1);
+    }
+
     public void doneButton(JFrame addPersonFrame, JPanel addPersonPanel) {
         JButton doneButton = new JButton("Done");
+        doneButton.setActionCommand("done");
         doneButton.addActionListener(this);
         doneButton.setVisible(true);
 
@@ -93,6 +141,8 @@ public class GUI extends JFrame implements ActionListener {
         addPersonFrame.add(addPersonPanel);
         addPersonFrame.pack();
         addPersonFrame.setVisible(true);
+
+        createPerson();
     }
 
     public static void main(String[] args) {
@@ -104,7 +154,9 @@ public class GUI extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("addPerson")) {
             personPanel();
         } else if (e.getActionCommand().equals("viewNames")) {
-            // TO-DO
+            viewNamesPanel();
+        } else if (e.getActionCommand().equals("done")) {
+            //
         } else if (e.getActionCommand().equals("deletePerson")) {
             System.out.println("Success! Most recent person has been deleted.");
         }

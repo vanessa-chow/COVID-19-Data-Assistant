@@ -115,7 +115,6 @@ public class CovidDataAssistant {
         Person person = new Person(name, number, places);
         database.addPerson(person);
         System.out.print("Person has successfully been added.");
-
     }
 
     // REQUIRES: list consists of at least one person
