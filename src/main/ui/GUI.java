@@ -154,7 +154,6 @@ public class GUI extends JFrame implements ActionListener {
         viewNamesFrame = new JFrame("Names");
         viewNamesFrame.setSize(250, 400);
         viewNamesFrame.setLayout(new GridLayout(10, 1));
-        viewNamesFrame.setResizable(true);
 
         viewNamesPanel = new JPanel();
 
