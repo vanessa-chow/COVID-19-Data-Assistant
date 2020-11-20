@@ -152,9 +152,9 @@ public class GUI extends JFrame implements ActionListener {
     // EFFECTS: makes a new window which displays names of saved visitors
     public void viewNamesPanel() {
         viewNamesFrame = new JFrame("Names");
-        viewNamesFrame.setSize(200, 400);
+        viewNamesFrame.setSize(250, 400);
         viewNamesFrame.setLayout(new GridLayout(10, 1));
-        viewNamesFrame.setResizable(false);
+        viewNamesFrame.setResizable(true);
 
         viewNamesPanel = new JPanel();
 
