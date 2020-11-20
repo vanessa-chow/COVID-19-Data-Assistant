@@ -148,7 +148,7 @@ public class GUI extends JFrame implements ActionListener {
 
     // EFFECTS: makes a new window which displays names of saved visitors
     public void viewNamesPanel() {
-        viewNamesFrame = new JFrame();
+        viewNamesFrame = new JFrame("Names");
         viewNamesFrame.setSize(200, 400);
         viewNamesFrame.setLayout(new GridLayout(10, 1));
         viewNamesFrame.setResizable(false);
@@ -159,12 +159,13 @@ public class GUI extends JFrame implements ActionListener {
         namesLabel = new JLabel(output);
         namesLabel.setVisible(true);
 
-        viewNamesFrame.setBackground(c1);
+        viewNamesPanel.setBackground(c1);
         viewNamesPanel.add(namesLabel);
         viewNamesFrame.add(namesLabel);
 
         viewNamesFrame.setVisible(true);
         viewNamesPanel.setVisible(true);
+        // only showing one name
     }
 
     // MODIFIES: this
@@ -199,8 +200,7 @@ public class GUI extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: alerts the user that the last person has been removed
     public void deletePersonPanel() {
-        deletePersonFrame = new JFrame();
-        database = new ListOfPerson("database");
+        deletePersonFrame = new JFrame("Success");
         deletePersonFrame.setSize(400, 100);
         deletePersonFrame.setBackground(c1);
         deletePersonFrame.setResizable(false);
@@ -209,12 +209,13 @@ public class GUI extends JFrame implements ActionListener {
         deletePersonPanel.setBackground(c1);
         deletePersonPanel.setVisible(true);
 
+        deletePersonFrame.add(deletePersonPanel);
+        deletePersonFrame.setVisible(true);
+
         database.removeLastPerson();
 
-        deletePersonLabel = new JLabel("Success! Person has been deleted!");
-        deletePersonFrame.add(deletePersonLabel);
-
-        deletePersonFrame.setVisible(true);
+        deletePersonLabel = new JLabel("Person has been deleted!");
+        deletePersonPanel.add(deletePersonLabel);
     }
 
     // EFFECTS: plays audio clip
