@@ -3,11 +3,14 @@ import model.Person;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.File;
 
 // code modeled after: https://introcs.cs.princeton.edu/java/15inout/GUI.java.html
 //                     https://beginnersbook.com/2015/07/java-swing-tutorial/
@@ -26,6 +29,9 @@ public class GUI extends JFrame implements ActionListener {
 
     private Person p1;
     private ListOfPerson database;
+
+    Image img = Toolkit.getDefaultToolkit().getImage("E:\\coronavirus-blue.jpg");
+
 
     Color c1 = new Color(176, 196, 222);
     Color c2 = new Color(100, 150, 190);
@@ -145,20 +151,56 @@ public class GUI extends JFrame implements ActionListener {
         createPerson();
     }
 
+    public void deletePersonPanel() {
+        JFrame deletePersonFrame = new JFrame();
+        ListOfPerson database = new ListOfPerson("database");
+        deletePersonFrame.setSize(400, 100);
+        deletePersonFrame.setBackground(c1);
+        deletePersonFrame.setResizable(false);
+
+        JPanel deletePersonPanel = new JPanel();
+        deletePersonPanel.setBackground(c1);
+        deletePersonPanel.setVisible(true);
+
+        JLabel deletePersonLabel = new JLabel("Success! Person has been deleted!");
+        deletePersonFrame.add(deletePersonLabel);
+
+//        database.removeLastPerson();
+
+        deletePersonFrame.setVisible(true);
+    }
+
+    // code from http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
+    public void playSound(String soundName) {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         new GUI();
     }
 
     @Override
+    //.wav file from http://www.pachd.com/button-sounds-2.html
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("addPerson")) {
             personPanel();
+            playSound("button11.wav");
         } else if (e.getActionCommand().equals("viewNames")) {
             viewNamesPanel();
+            playSound("button11.wav");
         } else if (e.getActionCommand().equals("done")) {
             //
         } else if (e.getActionCommand().equals("deletePerson")) {
-            System.out.println("Success! Most recent person has been deleted.");
+            deletePersonPanel();
+            playSound("button11.wav");
         }
     }
 
