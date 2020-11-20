@@ -1,8 +1,15 @@
 {
-    "persons": [{
-        "phoneNumber": "604-786-1063",
-        "name": "Vanessa Chow",
-        "placesVisited": "my house"
-    }],
+    "persons": [
+        {
+            "phoneNumber": "12345",
+            "name": "Vanessa Chow",
+            "placesVisited": "burnaby"
+        },
+        {
+            "phoneNumber": "54321",
+            "name": "person 123",
+            "placesVisited": "vancouver"
+        }
+    ],
     "name": "database"
 }

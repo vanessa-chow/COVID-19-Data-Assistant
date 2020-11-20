@@ -1,3 +1,5 @@
+package ui;
+
 import model.ListOfPerson;
 import model.Person;
 import persistence.JsonReader;
@@ -159,14 +161,12 @@ public class GUI extends JFrame implements ActionListener {
         output = database.outputNames();
         namesLabel = new JLabel(database.outputNames());
         namesLabel.setVisible(true);
-        System.out.println(database.outputNames());
 
         viewNamesPanel.add(namesLabel);
         viewNamesFrame.add(namesLabel);
 
         viewNamesFrame.setVisible(true);
         viewNamesPanel.setVisible(true);
-        // only showing one name
     }
 
     // MODIFIES: this
