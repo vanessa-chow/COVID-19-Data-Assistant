@@ -41,7 +41,7 @@ public class GUI extends JFrame implements ActionListener {
     private JLabel phoneLabel;
     private JLabel placesLabel;
     private JLabel deletePersonLabel;
-    private JLabel output;
+    private JLabel namesLabel;
     private JLabel cannotLoadLabel;
     private JLabel cannotSaveLabel;
 
@@ -52,6 +52,7 @@ public class GUI extends JFrame implements ActionListener {
     private String name;
     private String number;
     private String places;
+    private String output;
 
     private Clip clip;
 
@@ -147,20 +148,23 @@ public class GUI extends JFrame implements ActionListener {
 
     // EFFECTS: makes a new window which displays names of saved visitors
     public void viewNamesPanel() {
-        database = new ListOfPerson("database");
-
         viewNamesFrame = new JFrame();
-        viewNamesFrame.setSize(400, 400);
+        viewNamesFrame.setSize(200, 400);
+        viewNamesFrame.setLayout(new GridLayout(10, 1));
         viewNamesFrame.setResizable(false);
 
         viewNamesPanel = new JPanel();
-        viewNamesPanel.setVisible(true);
 
-        output = new JLabel(database.outputNames());
-        viewNamesPanel.setBackground(c1);
-        viewNamesPanel.add(output);
+        output = database.outputNames();
+        namesLabel = new JLabel(output);
+        namesLabel.setVisible(true);
+
+        viewNamesFrame.setBackground(c1);
+        viewNamesPanel.add(namesLabel);
+        viewNamesFrame.add(namesLabel);
 
         viewNamesFrame.setVisible(true);
+        viewNamesPanel.setVisible(true);
     }
 
     // MODIFIES: this
@@ -177,7 +181,6 @@ public class GUI extends JFrame implements ActionListener {
         Person p1 = new Person(name, number, places);
 
         database.addPerson(p1);
-        System.out.println(p1);
     }
 
     // EFFECTS: creates a new done button on the window where users can add a new person
@@ -206,10 +209,10 @@ public class GUI extends JFrame implements ActionListener {
         deletePersonPanel.setBackground(c1);
         deletePersonPanel.setVisible(true);
 
+        database.removeLastPerson();
+
         deletePersonLabel = new JLabel("Success! Person has been deleted!");
         deletePersonFrame.add(deletePersonLabel);
-
-        database.removeLastPerson();
 
         deletePersonFrame.setVisible(true);
     }
@@ -293,7 +296,7 @@ public class GUI extends JFrame implements ActionListener {
         } else if (e.getActionCommand().equals("save")) {
             saveListOfPerson();
             playSound("button11.wav");
-        } else if (e.getActionCommand().equals("Load")) {
+        } else if (e.getActionCommand().equals("load")) {
             loadListOfPerson();
             playSound("button11.wav");
         }
