@@ -1,0 +1,8 @@
+{
+    "persons": [{
+        "phoneNumber": "604-786-1063",
+        "name": "Vanessa Chow",
+        "placesVisited": "my house"
+    }],
+    "name": "database"
+}

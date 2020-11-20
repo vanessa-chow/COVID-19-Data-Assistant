@@ -156,10 +156,10 @@ public class GUI extends JFrame implements ActionListener {
         viewNamesPanel = new JPanel();
 
         output = database.outputNames();
-        namesLabel = new JLabel(output);
+        namesLabel = new JLabel(database.outputNames());
         namesLabel.setVisible(true);
+        System.out.println(database.outputNames());
 
-        viewNamesPanel.setBackground(c1);
         viewNamesPanel.add(namesLabel);
         viewNamesFrame.add(namesLabel);
 
