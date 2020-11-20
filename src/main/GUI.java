@@ -68,6 +68,7 @@ public class GUI extends JFrame implements ActionListener {
 
     public GUI() {
         frame = new JFrame();
+        database = new ListOfPerson("database");
 
         makeMainFrameButtons();
 
@@ -173,7 +174,6 @@ public class GUI extends JFrame implements ActionListener {
     //          adds the new person to the database
     public void createPerson() {
         addPersonPanel = new JPanel();
-        database = new ListOfPerson("database");
 
         name = nameField.getText();
         number = phoneField.getText();
