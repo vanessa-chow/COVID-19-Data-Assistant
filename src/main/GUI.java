@@ -11,26 +11,55 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 // code modeled after: https://introcs.cs.princeton.edu/java/15inout/GUI.java.html
 //                     https://beginnersbook.com/2015/07/java-swing-tutorial/
 public class GUI extends JFrame implements ActionListener {
 
     private JFrame frame;
+    private JFrame addPersonFrame;
+    private JFrame viewNamesFrame;
+    private JFrame deletePersonFrame;
+    private JFrame cannotLoadFrame;
+    private JFrame cannotSaveFrame;
+
     private JPanel mainPanel;
+    private JPanel addPersonPanel;
+    private JPanel viewNamesPanel;
+    private JPanel deletePersonPanel;
+
     private JButton addPersonButton;
     private JButton viewNamesButton;
     private JButton deleteRecentButton;
+    private JButton doneButton;
+    private JButton loadButton;
+    private JButton saveButton;
 
-    private JsonReader jsonReader;
-    private JsonWriter jsonWriter;
-    private String destination;
-    private String source;
+    private JLabel nameLabel;
+    private JLabel phoneLabel;
+    private JLabel placesLabel;
+    private JLabel deletePersonLabel;
+    private JLabel output;
+    private JLabel cannotLoadLabel;
+    private JLabel cannotSaveLabel;
 
-    private Person p1;
+    private JTextField nameField;
+    private JTextField phoneField;
+    private JTextField placesField;
+
+    private String name;
+    private String number;
+    private String places;
+
+    private Clip clip;
+
     private ListOfPerson database;
 
-    Image img = Toolkit.getDefaultToolkit().getImage("E:\\coronavirus-blue.jpg");
+    private static final String JSON_STORE = "./data/ListOfPerson.json";
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
 
     Color c1 = new Color(176, 196, 222);
@@ -39,6 +68,26 @@ public class GUI extends JFrame implements ActionListener {
     public GUI() {
         frame = new JFrame();
 
+        makeMainFrameButtons();
+
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(10, 1));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+        mainPanel.add(addPersonButton);
+        mainPanel.add(viewNamesButton);
+        mainPanel.add(deleteRecentButton);
+        mainPanel.add(saveButton);
+        mainPanel.add(loadButton);
+        mainPanel.setBackground(c2);
+
+        frame.add(mainPanel, BorderLayout.CENTER);
+        frame.setTitle("Covid Data Assistant");
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    // EFFECTS: assigns buttons to action commands and action listeners
+    public void makeMainFrameButtons() {
         addPersonButton = new JButton("Add a person");
         addPersonButton.setActionCommand("addPerson");
         addPersonButton.addActionListener(this);
@@ -51,94 +100,89 @@ public class GUI extends JFrame implements ActionListener {
         deleteRecentButton.setActionCommand("deletePerson");
         deleteRecentButton.addActionListener(this);
 
-        mainPanel = new JPanel();
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
-        mainPanel.setLayout(new GridLayout(10, 1));
-        mainPanel.add(addPersonButton);
-        mainPanel.add(viewNamesButton);
-        mainPanel.add(deleteRecentButton);
-        mainPanel.setBackground(c2);
+        saveButton = new JButton("Save");
+        saveButton.setActionCommand("save");
+        saveButton.addActionListener(this);
 
-        frame.add(mainPanel, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Covid Data Assistant");
-        frame.pack();
-        frame.setVisible(true);
+        loadButton = new JButton("Load");
+        loadButton.setActionCommand("load");
+        loadButton.addActionListener(this);
     }
 
+    // EFFECTS: creates a window which allows the user to add a new person with a name, phone number,
+    // and list of places the person has been
     public void personPanel() {
-        JPanel addPersonPanel = new JPanel(new GridLayout(0, 2));
+        addPersonPanel = new JPanel(new GridLayout(0, 2));
         addPersonPanel.setBackground(c1);
 
-        JFrame addPersonFrame = new JFrame();
+        addPersonFrame = new JFrame();
         addPersonFrame.setSize(400, 400);
 
-        JLabel nameLabel = new JLabel("Name (first and last):");
+        nameLabel = new JLabel("Name (first and last):");
         nameLabel.setBounds(40, 20, 80, 25);
         addPersonPanel.add(nameLabel);
 
-        JTextField nameField = new JTextField(20);
+        nameField = new JTextField(20);
         nameField.setBounds(50, 20, 165, 25);
         addPersonPanel.add(nameField);
 
-        JLabel phoneLabel = new JLabel("Phone number:");
+        phoneLabel = new JLabel("Phone number:");
         phoneLabel.setBounds(40, 50, 80, 25);
         addPersonPanel.add(phoneLabel);
 
-        JTextField phoneField = new JTextField(20);
+        phoneField = new JTextField(20);
         nameField.setBounds(50, 50, 165, 25);
         addPersonPanel.add(phoneField);
 
-        JLabel placesLabel = new JLabel("Places visited:");
+        placesLabel = new JLabel("Places visited:");
         placesLabel.setBounds(40, 80, 80, 25);
         addPersonPanel.add(placesLabel);
 
-        JTextField placesField = new JTextField(20);
+        placesField = new JTextField(20);
         placesField.setBounds(50, 80, 165, 25);
         addPersonPanel.add(placesField);
 
         doneButton(addPersonFrame, addPersonPanel);
     }
 
+    // EFFECTS: makes a new window which displays names of saved visitors
     public void viewNamesPanel() {
-        ListOfPerson database = new ListOfPerson("database");
-        JFrame viewNamesFrame = new JFrame();
+        database = new ListOfPerson("database");
+
+        viewNamesFrame = new JFrame();
         viewNamesFrame.setSize(400, 400);
         viewNamesFrame.setResizable(false);
 
-        JPanel viewNamesPanel = new JPanel();
+        viewNamesPanel = new JPanel();
         viewNamesPanel.setVisible(true);
 
-        JTextArea output = new JTextArea(20, 20);
-        output.setBackground(c1);
-
-        JScrollPane pane = new JScrollPane(output);
-        output.setText(database.outputNames());
-
-        pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        viewNamesFrame.add(pane);
+        output = new JLabel(database.outputNames());
+        viewNamesPanel.setBackground(c1);
+        viewNamesPanel.add(output);
 
         viewNamesFrame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a person given the text the user has entered into the nameField, phoneField, and placesField,
+    //          adds the new person to the database
     public void createPerson() {
-        ListOfPerson database = new ListOfPerson("database");
+        addPersonPanel = new JPanel();
+        database = new ListOfPerson("database");
 
-        JTextField nameField = new JTextField(20);
-        String name = nameField.getText();
-
-        JTextField phoneField = new JTextField(20);
-        String number = phoneField.getText();
-
-        JTextField placesField = new JTextField(20);
-        String places = placesField.getText();
+        name = nameField.getText();
+        number = phoneField.getText();
+        places = placesField.getText();
 
         Person p1 = new Person(name, number, places);
+
         database.addPerson(p1);
+        System.out.println(p1);
     }
 
+    // EFFECTS: creates a new done button on the window where users can add a new person
     public void doneButton(JFrame addPersonFrame, JPanel addPersonPanel) {
-        JButton doneButton = new JButton("Done");
+        doneButton = new JButton("Done");
         doneButton.setActionCommand("done");
         doneButton.addActionListener(this);
         doneButton.setVisible(true);
@@ -147,34 +191,35 @@ public class GUI extends JFrame implements ActionListener {
         addPersonFrame.add(addPersonPanel);
         addPersonFrame.pack();
         addPersonFrame.setVisible(true);
-
-        createPerson();
     }
 
+    // MODIFIES: this
+    // EFFECTS: alerts the user that the last person has been removed
     public void deletePersonPanel() {
-        JFrame deletePersonFrame = new JFrame();
-        ListOfPerson database = new ListOfPerson("database");
+        deletePersonFrame = new JFrame();
+        database = new ListOfPerson("database");
         deletePersonFrame.setSize(400, 100);
         deletePersonFrame.setBackground(c1);
         deletePersonFrame.setResizable(false);
 
-        JPanel deletePersonPanel = new JPanel();
+        deletePersonPanel = new JPanel();
         deletePersonPanel.setBackground(c1);
         deletePersonPanel.setVisible(true);
 
-        JLabel deletePersonLabel = new JLabel("Success! Person has been deleted!");
+        deletePersonLabel = new JLabel("Success! Person has been deleted!");
         deletePersonFrame.add(deletePersonLabel);
 
-//        database.removeLastPerson();
+        database.removeLastPerson();
 
         deletePersonFrame.setVisible(true);
     }
 
+    // EFFECTS: plays audio clip
     // code from http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
     public void playSound(String soundName) {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundName).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
         } catch (Exception ex) {
@@ -183,12 +228,55 @@ public class GUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: creates a new window alerting the user that the information could not be saved
+    public void cannotSaveListPanel() {
+        cannotSaveFrame = new JFrame();
+        cannotSaveFrame.setBackground(c1);
+        cannotSaveLabel = new JLabel("Unable to write to file" + JSON_STORE);
+        cannotSaveFrame.add(cannotSaveLabel);
+        cannotSaveFrame.setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: saves entries the user has entered
+    public void saveListOfPerson() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        try {
+            jsonWriter.open();
+            jsonWriter.write(database);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            cannotSaveListPanel();
+        }
+    }
+
+    // EFFECTS: creates a new window alerting the user that information could not be loaded
+    public void cannotLoadPanel() {
+        cannotLoadFrame = new JFrame();
+        cannotLoadFrame.setBackground(c1);
+        cannotLoadLabel = new JLabel("Unable to read from file:" + JSON_STORE);
+        cannotLoadFrame.add(cannotLoadLabel);
+        cannotLoadFrame.setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads list of saved person from before
+    private void loadListOfPerson() {
+        jsonReader = new JsonReader(JSON_STORE);
+        try {
+            database = jsonReader.read();
+        } catch (IOException e) {
+            cannotLoadPanel();
+        }
+    }
+
     public static void main(String[] args) {
         new GUI();
     }
 
     @Override
-    //.wav file from http://www.pachd.com/button-sounds-2.html
+    // EFFECTS: calls certain methods based on the given action command, plays sound for buttons
+    //button11.wav file from http://www.pachd.com/button-sounds-2.html
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("addPerson")) {
             personPanel();
@@ -197,11 +285,17 @@ public class GUI extends JFrame implements ActionListener {
             viewNamesPanel();
             playSound("button11.wav");
         } else if (e.getActionCommand().equals("done")) {
-            //
+            createPerson();
+            playSound("button11.wav");
         } else if (e.getActionCommand().equals("deletePerson")) {
             deletePersonPanel();
             playSound("button11.wav");
+        } else if (e.getActionCommand().equals("save")) {
+            saveListOfPerson();
+            playSound("button11.wav");
+        } else if (e.getActionCommand().equals("Load")) {
+            loadListOfPerson();
+            playSound("button11.wav");
         }
     }
-
 }

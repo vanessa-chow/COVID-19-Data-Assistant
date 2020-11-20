@@ -26,8 +26,8 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of ListOfPerson to file
-    public void write(ListOfPerson lop) {
-        JSONObject json = lop.toJson();
+    public void write(ListOfPerson database) {
+        JSONObject json = database.toJson();
         saveToFile(json.toString(TAB));
     }
 
