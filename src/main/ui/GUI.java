@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.NoViewableNamesException;
 import model.ListOfPerson;
 import model.Person;
 import persistence.JsonReader;
@@ -26,11 +27,13 @@ public class GUI extends JFrame implements ActionListener {
     private JFrame deletePersonFrame;
     private JFrame cannotLoadFrame;
     private JFrame cannotSaveFrame;
+    private JFrame noNamesToViewFrame;
 
     private JPanel mainPanel;
     private JPanel addPersonPanel;
     private JPanel viewNamesPanel;
     private JPanel deletePersonPanel;
+    private JPanel noNamesToViewPanel;
 
     private JButton addPersonButton;
     private JButton viewNamesButton;
@@ -46,6 +49,7 @@ public class GUI extends JFrame implements ActionListener {
     private JLabel namesLabel;
     private JLabel cannotLoadLabel;
     private JLabel cannotSaveLabel;
+    private JLabel noNamesToViewLabel;
 
     private JTextField nameField;
     private JTextField phoneField;
@@ -151,21 +155,45 @@ public class GUI extends JFrame implements ActionListener {
 
     // EFFECTS: makes a new window which displays names of saved visitors
     public void viewNamesPanel() {
-        viewNamesFrame = new JFrame("Names");
-        viewNamesFrame.setSize(250, 400);
-        viewNamesFrame.setLayout(new GridLayout(10, 1));
+        try {
+            viewNamesFrame = new JFrame("Names");
+            viewNamesFrame.setSize(250, 400);
+            viewNamesFrame.setLayout(new GridLayout(10, 1));
 
-        viewNamesPanel = new JPanel();
+            viewNamesPanel = new JPanel();
 
-        output = database.outputNames();
-        namesLabel = new JLabel(database.outputNames());
-        namesLabel.setVisible(true);
+            output = database.outputNames();
+            namesLabel = new JLabel(database.outputNames());
+            namesLabel.setVisible(true);
 
-        viewNamesPanel.add(namesLabel);
-        viewNamesFrame.add(namesLabel);
+            viewNamesPanel.add(namesLabel);
+            viewNamesFrame.add(namesLabel);
 
-        viewNamesFrame.setVisible(true);
-        viewNamesPanel.setVisible(true);
+            viewNamesFrame.setVisible(true);
+            viewNamesPanel.setVisible(true);
+        } catch (NoViewableNamesException e) {
+            noNamesToViewPanel();
+        }
+    }
+
+    public void noNamesToViewPanel() {
+        noNamesToViewFrame = new JFrame("WARNING");
+        noNamesToViewFrame.setSize(200, 100);
+        noNamesToViewFrame.setResizable(false);
+
+        noNamesToViewPanel = new JPanel();
+
+        noNamesToViewLabel = new JLabel("There are currently no names to view. \n"
+                + "Please load a list or add names to view them.");
+        noNamesToViewLabel.setForeground(Color.red);
+
+        noNamesToViewFrame.add(noNamesToViewPanel);
+        noNamesToViewFrame.add(noNamesToViewLabel);
+
+        noNamesToViewFrame.pack();
+        noNamesToViewFrame.setVisible(true);
+        noNamesToViewPanel.setVisible(true);
+        noNamesToViewLabel.setVisible(true);
     }
 
     // MODIFIES: this

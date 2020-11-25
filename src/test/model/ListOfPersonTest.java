@@ -1,9 +1,11 @@
 package model;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import exceptions.NoViewableNamesException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class ListOfPersonTest {
@@ -41,27 +43,48 @@ public class ListOfPersonTest {
 
     @Test
     void testGetNames() {
-        list1.addPerson(p1);
-        list1.addPerson(p2);
-        assertEquals("Alicia Chow\nMegan Wong\n",list1.outputNames());
+        try {
+            list1.addPerson(p1);
+            list1.addPerson(p2);
+            assertEquals("Alicia Chow\nMegan Wong\n", list1.outputNames());
+        } catch (NoViewableNamesException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+
+    @Test
+    void testGetNamesNoNames() {
+        try {
+            list1.outputNames();
+            fail("Exception should have been thrown");
+        } catch (NoViewableNamesException e) {
+            // expected
+        }
     }
 
     @Test
     void removeLastPerson() {
-        list1.addPerson(p1);
-        list1.addPerson(p2);
-        list1.removeLastPerson();
-        assertEquals("Alicia Chow\n", list1.outputNames());
-        assertEquals(1, list1.numPersons());
-        assertEquals(p1, list1.getPerson(0));
+        try {
+            list1.addPerson(p1);
+            list1.addPerson(p2);
+            list1.removeLastPerson();
+            assertEquals("Alicia Chow\n", list1.outputNames());
+            assertEquals(1, list1.numPersons());
+            assertEquals(p1, list1.getPerson(0));
+        } catch (NoViewableNamesException e) {
+            fail("Exception should not have been thrown");
+        }
     }
 
     @Test
     void testSeeDetails() {
-        list1.addPerson(p2);
-        assertEquals("Megan Wong\n", list1.outputNames());
-        assertEquals(p2, list1.seeDetails("Megan Wong"));
-        assertEquals(null, list1.seeDetails("Vanessa Chow"));
-
+        try {
+            list1.addPerson(p2);
+            assertEquals("Megan Wong\n", list1.outputNames());
+            assertEquals(p2, list1.seeDetails("Megan Wong"));
+            assertEquals(null, list1.seeDetails("Vanessa Chow"));
+        } catch (NoViewableNamesException e) {
+            fail("Exception should not have been thrown.");
+        }
     }
 }

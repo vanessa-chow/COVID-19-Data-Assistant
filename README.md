@@ -1,12 +1,13 @@
 # COVID-19 Data Assistant
 
 ## **Overview**:
-The *COVID-19 Data Assistant* is here to help restaurants, stores, or any type of health organization keep track of
+The *COVID-19 Data Assistant* functions to help restaurants, stores, or any type of health organization keep track of
 important information about their customers or visitors from that day. Businesses or organizations who use the
 *COVID-19 Data Assistant* can store the individual's name, phone number, and the other places
 they've been that day. If someone who visited the place or business tested positive for the virus, the business would
-be able to contact everyone else who that person may have come in contact with that day. At the end of the day, the
-*COVID-19 Data Assistant* prints out a daily log of visitors for the business/organization to keep for their own records.
+be able to contact everyone else who that person may have come in contact with that day. At the end of the day, the user
+can then print out a daily log of visitors stored using the *COVID-19 Data Assistant*, and keep it for their own
+records.
 
 For my project, I wanted to create something relevant and useful for today's world. With the COVID-19 pandemic affecting
 everyone globally, I felt that a data assistant would be incredibly useful for businesses and other organizations to 
@@ -25,3 +26,10 @@ of all of the business/organization's visitors.
 - As a user, I want to be able to select a name on the visitor list and view their information in detail
 - As a user, I want to be able to save my list of visitors' information to file
 - As a user, I want to be able to load my list of visitors' information on file
+
+## **Phase 4: Task 2**
+For Task 2 of Phase 4, I chose to implement a robust class. Specifically, I made my ListOfPerson class in my model
+package robust by having my outputNames() method throw an exception called NoViewableNamesException when there are no
+names on the current list to be viewed by the user. This NoViewableNamesException is caught in the viewNamesPanel()
+method (found in the GUI class of the ui package), where the user will be alerted with a warning window, telling them to
+either load a list of names or add at least one name before trying to view the list again.

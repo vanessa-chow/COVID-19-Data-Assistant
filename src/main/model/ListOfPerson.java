@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.NoViewableNamesException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -34,23 +35,28 @@ public class ListOfPerson implements Writable {
         return Collections.unmodifiableList(persons);
     }
 
+    // EFFECTS: returns the size of the list of persons
     public int numPersons() {
         return persons.size();
     }
 
+    // EFFECTS: returns the person at the given index
     public Person getPerson(int index) {
         return persons.get(index);
     }
 
-
     // REQUIRES: at least one name on the list
     // EFFECTS: outputs names on the list
-    public String outputNames() {
+    public String outputNames() throws NoViewableNamesException {
         String result = "";
-        for (Person name : persons) {
-            result += name.getName() + "\n";
+        if (persons.size() == 0) {
+            throw new NoViewableNamesException();
+        } else {
+            for (Person name : persons) {
+                result += name.getName() + "\n";
+            }
+            return result;
         }
-        return result;
     }
 
     // REQUIRES: at least one person on the list

@@ -1,18 +1,14 @@
 package ui.console;
 
+import exceptions.NoViewableNamesException;
 import model.ListOfPerson;
-
 import model.Person;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-
-import org.json.*;
-import persistence.JsonReader;
-import persistence.JsonWriter;
-
-import javax.crypto.spec.PSource;
 
 
 //COVID-19 Data Assistant
@@ -24,7 +20,7 @@ public class CovidDataAssistant {
     private JsonWriter jsonWriter;
 
     // EFFECTS: constructs workroom and runs application
-    public CovidDataAssistant() throws FileNotFoundException {
+    public CovidDataAssistant() throws FileNotFoundException, NoViewableNamesException {
         input = new Scanner(System.in);
         database = new ListOfPerson("My list of persons");
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -35,7 +31,7 @@ public class CovidDataAssistant {
 
     // MODIFIES: this
     // EFFECTS: processes user input
-    private void runDataAssistant() {
+    private void runDataAssistant() throws NoViewableNamesException {
         boolean keepGoing = true;
         String command = null;
 
@@ -57,8 +53,7 @@ public class CovidDataAssistant {
 
     // MODIFIES: this
     // EFFECTS: processes user command
-    private void processCommand(String command) {
-
+    private void processCommand(String command) throws NoViewableNamesException {
         if (command.equals("a")) {
             newPerson();
         } else if (command.equals("n")) {
@@ -119,9 +114,10 @@ public class CovidDataAssistant {
 
     // REQUIRES: list consists of at least one person
     // EFFECTS: view names on list
-    private void viewNames() {
+    private void viewNames() throws NoViewableNamesException {
         System.out.print(database.outputNames());
         input.nextLine();
+
     }
 
     // MODIFIES: this

@@ -1,15 +1,4 @@
 {
-    "persons": [
-        {
-            "phoneNumber": "12345",
-            "name": "Vanessa Chow",
-            "placesVisited": "burnaby"
-        },
-        {
-            "phoneNumber": "54321",
-            "name": "person 123",
-            "placesVisited": "vancouver"
-        }
-    ],
-    "name": "database"
+    "persons": [],
+    "name": "list1"
 }
