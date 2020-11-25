@@ -20,7 +20,7 @@ public class CovidDataAssistant {
     private JsonWriter jsonWriter;
 
     // EFFECTS: constructs workroom and runs application
-    public CovidDataAssistant() throws FileNotFoundException, NoViewableNamesException {
+    public CovidDataAssistant() throws NoViewableNamesException {
         input = new Scanner(System.in);
         database = new ListOfPerson("My list of persons");
         jsonWriter = new JsonWriter(JSON_STORE);

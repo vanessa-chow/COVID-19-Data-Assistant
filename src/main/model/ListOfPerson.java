@@ -45,8 +45,8 @@ public class ListOfPerson implements Writable {
         return persons.get(index);
     }
 
-    // REQUIRES: at least one name on the list
-    // EFFECTS: outputs names on the list
+    // EFFECTS: outputs names on the list, if there are no names on the list,
+    //          throws NoViewableNamesException
     public String outputNames() throws NoViewableNamesException {
         String result = "";
         if (persons.size() == 0) {

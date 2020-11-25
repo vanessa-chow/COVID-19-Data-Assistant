@@ -17,7 +17,7 @@ can then easily find all the people who visited their business that day, so that
 data manager assistant would help reduce the transmission of COVID-19 by encouraging people to get tested,
 even if they are asymptomatic. I was inspired to create the *COVID-19 Data Assistant* after visiting a restaurant where
 I was asked to leave my information for this very purpose, and I felt like it was simple yet excellent way to keep track
-of all of the business/organization's visitors.
+of all the business/organization's visitors.
 
 ## **User Stories**:
 - As a user, I want to be able to add a visitor's information to the list
@@ -33,3 +33,14 @@ package robust by having my outputNames() method throw an exception called NoVie
 names on the current list to be viewed by the user. This NoViewableNamesException is caught in the viewNamesPanel()
 method (found in the GUI class of the ui package), where the user will be alerted with a warning window, telling them to
 either load a list of names or add at least one name before trying to view the list again.
+
+## **Phase 4: Task 3**
+Given more time, I would definitely perform some refactoring to improve my design. In my GUI class, there is a lot of
+code, and it is also somewhat repetitive. To clean this up, I would separate this code into smaller subclasses to
+improve readability. For example, the code that is used to make new JFrames, JPanels, JLabels and JButtons is quite
+repetitive. To fix this, JFrame, JPanel, JLabel, and JButton could all be made into separate subclasses. This design
+choice would make for the GUI class as a whole to be much more readable, and cleaner looking. Additionally, in my
+CovidDataAssistant class, the processCommand() method is quite long, specifically the lines of code that execute when
+the user presses the "c" button. Instead, to improve readability, I could take those few lines and make them into a new
+method, which is then called when the user presses "c". This would also make the overall code look much cleaner, and
+therefore easier to understand.
