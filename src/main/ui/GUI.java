@@ -69,8 +69,8 @@ public class GUI extends JFrame implements ActionListener {
     private JsonWriter jsonWriter;
 
 
-    Color c1 = new Color(176, 196, 222);
-    Color c2 = new Color(100, 150, 190);
+    Color c0 = new Color(176, 196, 222);
+    Color c1 = new Color(100, 150, 190);
 
     public GUI() {
         frame = new JFrame();
@@ -86,7 +86,7 @@ public class GUI extends JFrame implements ActionListener {
         mainPanel.add(deleteRecentButton);
         mainPanel.add(saveButton);
         mainPanel.add(loadButton);
-        mainPanel.setBackground(c2);
+        mainPanel.setBackground(c1);
 
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.setTitle("Covid Data Assistant");
@@ -121,7 +121,7 @@ public class GUI extends JFrame implements ActionListener {
     // and list of places the person has been
     public void personPanel() {
         addPersonPanel = new JPanel(new GridLayout(0, 2));
-        addPersonPanel.setBackground(c1);
+        addPersonPanel.setBackground(c0);
 
         addPersonFrame = new JFrame();
         addPersonFrame.setSize(400, 400);
@@ -229,11 +229,11 @@ public class GUI extends JFrame implements ActionListener {
     public void deletePersonPanel() {
         deletePersonFrame = new JFrame("Success");
         deletePersonFrame.setSize(400, 100);
-        deletePersonFrame.setBackground(c1);
+        deletePersonFrame.setBackground(c0);
         deletePersonFrame.setResizable(false);
 
         deletePersonPanel = new JPanel();
-        deletePersonPanel.setBackground(c1);
+        deletePersonPanel.setBackground(c0);
         deletePersonPanel.setVisible(true);
 
         deletePersonFrame.add(deletePersonPanel);
@@ -262,7 +262,7 @@ public class GUI extends JFrame implements ActionListener {
     // EFFECTS: creates a new window alerting the user that the information could not be saved
     public void cannotSaveListPanel() {
         cannotSaveFrame = new JFrame();
-        cannotSaveFrame.setBackground(c1);
+        cannotSaveFrame.setBackground(c0);
         cannotSaveLabel = new JLabel("Unable to write to file" + JSON_STORE);
         cannotSaveFrame.add(cannotSaveLabel);
         cannotSaveFrame.setVisible(true);
@@ -284,7 +284,7 @@ public class GUI extends JFrame implements ActionListener {
     // EFFECTS: creates a new window alerting the user that information could not be loaded
     public void cannotLoadPanel() {
         cannotLoadFrame = new JFrame();
-        cannotLoadFrame.setBackground(c1);
+        cannotLoadFrame.setBackground(c0);
         cannotLoadLabel = new JLabel("Unable to read from file:" + JSON_STORE);
         cannotLoadFrame.add(cannotLoadLabel);
         cannotLoadFrame.setVisible(true);
