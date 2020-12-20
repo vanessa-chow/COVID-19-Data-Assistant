@@ -1,4 +1,8 @@
 {
-    "persons": [],
-    "name": "list1"
+    "persons": [{
+        "phoneNumber": "6047861061",
+        "name": "Chow, Alicia",
+        "placesVisited": "ShareTea, McDonald's"
+    }],
+    "name": "database"
 }
